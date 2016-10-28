@@ -89,7 +89,6 @@ decimal_number = digit { digit }
 hexadecimal_number = ("0x" | “0X”) hex_digit { hex_digit }
 ```
 
-
 In DesignScript, the range of integer value is -263 - 263 - 1.
 
 Example:
@@ -113,7 +112,6 @@ floating_point =
 exponent = (‘E’ | ‘e’) [‘+’ | ‘-’] digit { digit }
 ```
 
-
 Example:
 
 ```
@@ -121,7 +119,6 @@ Example:
 1.234;
 .123;     // 0.123
 ```
-
 
 ### String literal
 
@@ -189,25 +186,13 @@ The type system in DesignScript is dynamic and object-oriented. DesignScript sup
   </tr>
 </table>
 
-
 The default value of all other types is "null". 
 
-### User defined types
-
-User defined types are supported through [class mechanism](#heading=h.ussn8fy27o8t) . Objects, instances of classes, may contain
-
-* Properties
-* Instance methods
-* Static members
-* Constructors
-
-Only single inheritance is allowed in DesignScript.
-
-### List
+### Table
 
 #### Rank
 
-If a type has rank suffix, it declares a list. The number of "[]" specifies the number of rank. “[]..[]” specifies arbitrary rank. For example,
+If a type has rank suffix, it declares a list. The number of closed square brackets "[]" specify rank. “[]..[]” specifies arbitrary rank. For example,
 
 ```
 int[]     // an integer list whose rank is 1
@@ -215,7 +200,7 @@ int[][]   // an integer list whose rank is 2
 int[]..[] // an integer list with arbitrary rank
 ```
 
-The rank of type decides how do [replication ](#heading=h.f51u2x6ertfi)and [replication guide](#heading=h.f51u2x6ertfi) work in function dispatch.
+The rank of type decides how [replication and replication guide](#replication-guides) work in function dispatch.
 
 #### Dynamic list
 
@@ -223,18 +208,16 @@ Lists are dynamic. It is possible to index into any location of the list. If set
 
 ```
 x = {1, 2, 3};
-x[5] = 4;      // x = {1, 2, 3, null, null, 4};
+y = Set(5, 4);      // x = {1, 2, 3, null, null, 4};
 ```
-
 
 #### Use as a list
 
-A list is just a special case of list whose keys are integers. When indexing a list, the type of key could be any type. For example:
+A list is just a special case of a table whose keys are integers. When indexing a list, the type of key could be any type. For example:
 
 ```
 x = {1, 2, 3};
-x["foo"] = 4;      
-x[false] = 5;
+
 ```
 
 
@@ -576,7 +559,7 @@ r2 = foo(2.1, 3.2);
 
 ## Expressions
 
-### List creation expression
+### Table literal
 
 ```
 ListCreationExpression = "{“ [Expression { “," Expression } ] “}”
@@ -634,7 +617,6 @@ Range expression  is handled specially for strings with single character. For ex
 “a”..”g”..#3; // {“a”, “d”, “g”}
 ```
 
-
 ### Inline conditional expression
 
 ```
@@ -649,7 +631,6 @@ x = 2;
 y = (x % 2 == 0) ? "foo" : 21; 
 ```
 
-
 Inline conditional expressions replicate on all three expressions. Example:
 
 ```
@@ -660,7 +641,6 @@ z = {“ding”, “dang”, “dong”};
 r = x ? y : z;  // replicates, r = {“foo”, “dang”, “qux”}
 ```
 
-
 ### Member access expression
 
 Member access expression is of the form
@@ -668,7 +648,6 @@ Member access expression is of the form
 ```
 x.y.z
 ```
-
 
 "y" and “z” could be properties, or member functions. If they are not accessible, null will be returned. 
 
@@ -734,7 +713,6 @@ r2 = x<1> + y<2>; // replication guide
                   //          {7, 8, 9}
                   //      }
 ```
-
 
 Operator precedence
 
@@ -994,7 +972,7 @@ def sum(x)
 }
 ```
 
-## Replication and replication guides
+## <a name="replication-guides"></a>Replication and replication guides
 
 ### Replication and replication guide
 
